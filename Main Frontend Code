@@ -1,0 +1,575 @@
+# Maison-Dor-Bakery-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Maison Doré — Artisanal Bakery</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wood-darkest: #1a0f08;
+    --wood-dark: #2a1810;
+    --wood-mid: #3d2418;
+    --wood-light: #5c3a25;
+    --gold: #d4a85a;
+    --gold-light: #f0c878;
+    --gold-deep: #b8893d;
+    --cream: #f5e6c8;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--wood-darkest);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  .serif { font-family: 'Cormorant Garamond', serif; }
+
+  /* Wood texture background */
+  .wood-bg {
+    background:
+      radial-gradient(ellipse at top, rgba(212, 168, 90, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at bottom right, rgba(212, 168, 90, 0.06) 0%, transparent 50%),
+      linear-gradient(180deg, #1a0f08 0%, #2a1810 50%, #1a0f08 100%);
+    position: relative;
+  }
+
+  .wood-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(90deg,
+        transparent 0px,
+        rgba(0,0,0,0.15) 1px,
+        transparent 2px,
+        transparent 80px),
+      repeating-linear-gradient(0deg,
+        transparent 0px,
+        rgba(212, 168, 90, 0.02) 1px,
+        transparent 3px);
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  /* Gold gradient text */
+  .gold-text {
+    background: linear-gradient(135deg, #f0c878 0%, #d4a85a 40%, #b8893d 70%, #f0c878 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: shimmer 8s ease infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* Header */
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(0px);
+  }
+
+  .header.scrolled {
+    backdrop-filter: blur(20px);
+    background: rgba(26, 15, 8, 0.85);
+    border-bottom: 1px solid rgba(212, 168, 90, 0.15);
+  }
+
+  /* Logo */
+  .logo-mark {
+    width: 44px;
+    height: 44px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .logo-mark::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(212, 168, 90, 0.4);
+    border-radius: 50%;
+  }
+
+  /* Hero bread illustration using CSS / SVG */
+  .hero-image-wrap {
+    position: relative;
+    filter: drop-shadow(0 40px 60px rgba(0,0,0,0.6));
+  }
+
+  .hero-image-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    left: 10%;
+    right: 10%;
+    height: 60px;
+    background: radial-gradient(ellipse, rgba(0,0,0,0.5) 0%, transparent 70%);
+    filter: blur(20px);
+    z-index: -1;
+  }
+
+  /* Spotlight */
+  .spotlight {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 70% 40%, rgba(240, 200, 120, 0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Golden button */
+  .btn-gold {
+    position: relative;
+    background: linear-gradient(135deg, #d4a85a 0%, #b8893d 100%);
+    color: #1a0f08;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    border-radius: 999px;
+    padding: 1.1rem 2.6rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+      0 0 0 1px rgba(240, 200, 120, 0.3),
+      0 10px 30px rgba(212, 168, 90, 0.3),
+      0 0 60px rgba(212, 168, 90, 0.15);
+    overflow: hidden;
+  }
+
+  .btn-gold::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.6s ease;
+  }
+
+  .btn-gold:hover::before { left: 100%; }
+
+  .btn-gold:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 0 0 1px rgba(240, 200, 120, 0.5),
+      0 20px 50px rgba(212, 168, 90, 0.5),
+      0 0 100px rgba(212, 168, 90, 0.3);
+  }
+
+  .btn-ghost {
+    border: 1px solid rgba(212, 168, 90, 0.4);
+    color: var(--gold-light);
+    border-radius: 999px;
+    padding: 1.1rem 2.6rem;
+    transition: all 0.3s ease;
+    letter-spacing: 0.1em;
+  }
+
+  .btn-ghost:hover {
+    background: rgba(212, 168, 90, 0.1);
+    border-color: var(--gold);
+  }
+
+  /* Glow CTA at bottom */
+  .glow-cta {
+    background: linear-gradient(135deg, #f0c878 0%, #d4a85a 50%, #b8893d 100%);
+    color: #1a0f08;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    padding: 1.4rem 4rem;
+    border-radius: 999px;
+    position: relative;
+    box-shadow:
+      0 0 0 1px rgba(240, 200, 120, 0.4),
+      0 0 40px rgba(212, 168, 90, 0.4),
+      0 0 80px rgba(212, 168, 90, 0.3),
+      0 20px 50px rgba(0, 0, 0, 0.5);
+    transition: all 0.4s ease;
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% {
+      box-shadow:
+        0 0 0 1px rgba(240, 200, 120, 0.4),
+        0 0 40px rgba(212, 168, 90, 0.4),
+        0 0 80px rgba(212, 168, 90, 0.3),
+        0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+      box-shadow:
+        0 0 0 1px rgba(240, 200, 120, 0.6),
+        0 0 60px rgba(212, 168, 90, 0.6),
+        0 0 120px rgba(212, 168, 90, 0.4),
+        0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .glow-cta:hover {
+    transform: translateY(-4px) scale(1.02);
+  }
+
+  /* Card */
+  .product-card {
+    background: linear-gradient(180deg, rgba(61, 36, 24, 0.4) 0%, rgba(26, 15, 8, 0.6) 100%);
+    border: 1px solid rgba(212, 168, 90, 0.15);
+    border-radius: 24px;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .product-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(212, 168, 90, 0.4);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(212, 168, 90, 0.1);
+  }
+
+  .product-img {
+    height: 280px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #2a1810 0%, #1a0f08 100%);
+  }
+
+  /* Divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .divider .line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* Reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Float animation */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .float-anim { animation: float 6s ease-in-out infinite; }
+
+  /* Steam */
+  .steam {
+    position: absolute;
+    bottom: 100%;
+    width: 8px;
+    height: 60px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.3), transparent);
+    border-radius: 50%;
+    filter: blur(8px);
+    animation: rise 4s ease-in infinite;
+    opacity: 0;
+  }
+
+  @keyframes rise {
+    0% { opacity: 0; transform: translateY(0) scale(1); }
+    20% { opacity: 0.6; }
+    100% { opacity: 0; transform: translateY(-80px) scale(2); }
+  }
+
+  /* Hero image as photographic gradient illustration */
+  .hero-bread-scene {
+    width: 100%;
+    aspect-ratio: 1/1;
+    max-width: 600px;
+    position: relative;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body class="wood-bg">
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <nav class="max-w-7xl mx-auto px-6 lg:px-12 py-5 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="logo-mark">
+        <span class="serif text-xl font-semibold gold-text">M</span>
+      </div>
+      <div>
+        <div class="serif text-xl tracking-widest text-amber-100">MAISON DORÉ</div>
+        <div class="text-[10px] tracking-[0.3em] text-amber-200/50 uppercase">Artisan Bakery · Est. 1924</div>
+      </div>
+    </div>
+
+    <ul class="hidden lg:flex items-center gap-10 text-sm tracking-widest uppercase">
+      <li><a href="#home" class="hover:text-amber-300 transition text-amber-100/80">Home</a></li>
+      <li><a href="#menu" class="hover:text-amber-300 transition text-amber-100/80">Menu</a></li>
+      <li><a href="#story" class="hover:text-amber-300 transition text-amber-100/80">Our Story</a></li>
+      <li><a href="#contact" class="hover:text-amber-300 transition text-amber-100/80">Contact</a></li>
+    </ul>
+
+    <a href="#order" class="btn-ghost hidden md:inline-block text-xs uppercase">Reserve</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="home" class="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
+  <div class="spotlight"></div>
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center w-full relative z-10">
+    
+    <!-- Text -->
+    <div class="reveal">
+      <div class="flex items-center gap-3 mb-8">
+        <span class="w-12 h-px bg-amber-400"></span>
+        <span class="text-xs tracking-[0.4em] text-amber-300 uppercase">Crafted Since 1924</span>
+      </div>
+
+      <h1 class="serif text-6xl md:text-7xl lg:text-8xl leading-[0.95] font-light mb-6">
+        The Art of <br>
+        <span class="gold-text italic font-medium">Slow Baking</span>
+      </h1>
+
+      <p class="text-amber-100/70 text-lg md:text-xl leading-relaxed max-w-xl mb-10 font-light">
+        Hand-folded sourdough, golden butter croissants, and decadent pastries —
+        each loaf shaped at dawn with century-old technique and the finest French butter.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="#order" class="btn-gold text-sm text-center uppercase">Order Now →</a>
+        <a href="#menu" class="btn-ghost text-sm text-center uppercase">Explore Menu</a>
+      </div>
+
+      <!-- Stats -->
+      <div class="mt-16 grid grid-cols-3 gap-6 max-w-lg">
+        <div>
+          <div class="serif text-4xl gold-text">100</div>
+          <div class="text-[10px] tracking-[0.2em] uppercase text-amber-100/50 mt-1">Years of Craft</div>
+        </div>
+        <div>
+          <div class="serif text-4xl gold-text">24h</div>
+          <div class="text-[10px] tracking-[0.2em] uppercase text-amber-100/50 mt-1">Slow Fermented</div>
+        </div>
+        <div>
+          <div class="serif text-4xl gold-text">★★★</div>
+          <div class="text-[10px] tracking-[0.2em] uppercase text-amber-100/50 mt-1">Michelin Guide</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero image: photorealistic bread illustration -->
+    <div class="reveal hero-image-wrap float-anim">
+      <div class="hero-bread-scene">
+        <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+          <defs>
+            <!-- Background light -->
+            <radialGradient id="bgLight" cx="50%" cy="35%" r="60%">
+              <stop offset="0%" stop-color="#f0c878" stop-opacity="0.25"/>
+              <stop offset="40%" stop-color="#5c3a25" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#1a0f08" stop-opacity="0"/>
+            </radialGradient>
+
+            <!-- Wood surface -->
+            <linearGradient id="woodSurface" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#3d2418"/>
+              <stop offset="50%" stop-color="#2a1810"/>
+              <stop offset="100%" stop-color="#1a0f08"/>
+            </linearGradient>
+
+            <!-- Sourdough -->
+            <radialGradient id="sourdoughTop" cx="40%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#e8b572"/>
+              <stop offset="40%" stop-color="#c08a4a"/>
+              <stop offset="80%" stop-color="#6b3f1f"/>
+              <stop offset="100%" stop-color="#3d2418"/>
+            </radialGradient>
+
+            <radialGradient id="sourdoughCrust" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#d4a85a"/>
+              <stop offset="60%" stop-color="#8b5a2b"/>
+              <stop offset="100%" stop-color="#3d2418"/>
+            </radialGradient>
+
+            <!-- Croissant -->
+            <linearGradient id="croissant" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f5d896"/>
+              <stop offset="40%" stop-color="#e0b06a"/>
+              <stop offset="80%" stop-color="#a87038"/>
+              <stop offset="100%" stop-color="#6b3f1f"/>
+            </linearGradient>
+
+            <linearGradient id="croissantShine" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#fff3d6" stop-opacity="0.7"/>
+              <stop offset="100%" stop-color="#fff3d6" stop-opacity="0"/>
+            </linearGradient>
+
+            <!-- Gold dust -->
+            <radialGradient id="goldDust" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffe080" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#ffe080" stop-opacity="0"/>
+            </radialGradient>
+
+            <filter id="blur1"><feGaussianBlur stdDeviation="2"/></filter>
+            <filter id="softGlow">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Background ambient light -->
+          <rect width="600" height="600" fill="url(#bgLight)"/>
+
+          <!-- Wood surface (perspective) -->
+          <path d="M 0 380 L 600 380 L 600 600 L 0 600 Z" fill="url(#woodSurface)"/>
+          
+          <!-- Wood grain lines -->
+          <g opacity="0.4">
+            <line x1="0" y1="420" x2="600" y2="425" stroke="#0a0604" stroke-width="1"/>
+            <line x1="0" y1="460" x2="600" y2="455" stroke="#0a0604" stroke-width="1.5"/>
+            <line x1="0" y1="500" x2="600" y2="505" stroke="#0a0604" stroke-width="1"/>
+            <line x1="0" y1="540" x2="600" y2="535" stroke="#0a0604" stroke-width="2"/>
+            <line x1="0" y1="580" x2="600" y2="582" stroke="#0a0604" stroke-width="1"/>
+          </g>
+
+          <!-- Shadow under bread -->
+          <ellipse cx="220" cy="410" rx="170" ry="20" fill="#000" opacity="0.6" filter="url(#blur1)"/>
+          <ellipse cx="440" cy="420" rx="120" ry="15" fill="#000" opacity="0.5" filter="url(#blur1)"/>
+
+          <!-- SOURDOUGH BREAD -->
+          <g>
+            <!-- Main body -->
+            <ellipse cx="220" cy="340" rx="160" ry="100" fill="url(#sourdoughCrust)"/>
+            <ellipse cx="215" cy="320" rx="145" ry="85" fill="url(#sourdoughTop)"/>
+            
+            <!-- Top highlights -->
+            <ellipse cx="190" cy="290" rx="80" ry="35" fill="#f0c878" opacity="0.5"/>
+            <ellipse cx="180" cy="280" rx="50" ry="20" fill="#fff3d6" opacity="0.4"/>
+
+            <!-- Score marks (slashes) -->
+            <g stroke="#3d2418" stroke-width="3" fill="none" opacity="0.7">
+              <path d="M 130 290 Q 180 270 230 290" stroke-linecap="round"/>
+              <path d="M 160 320 Q 210 300 260 320" stroke-linecap="round"/>
+              <path d="M 190 350 Q 240 330 290 350" stroke-linecap="round"/>
+            </g>
+
+            <!-- Flour dust -->
+            <g fill="#f5e6c8" opacity="0.6">
+              <circle cx="150" cy="280" r="1.5"/>
+              <circle cx="200" cy="270" r="2"/>
+              <circle cx="240" cy="285" r="1.5"/>
+              <circle cx="180" cy="310" r="1"/>
+              <circle cx="270" cy="305" r="1.5"/>
+              <circle cx="220" cy="295" r="1"/>
+            </g>
+
+            <!-- Crust texture spots -->
+            <g fill="#3d2418" opacity="0.3">
+              <circle cx="120" cy="340" r="3"/>
+              <circle cx="280" cy="350" r="4"/>
+              <circle cx="320" cy="320" r="3"/>
+              <circle cx="100" cy="320" r="2"/>
+            </g>
+          </g>
+
+          <!-- CROISSANT 1 -->
+          <g transform="translate(420, 320) rotate(-15)">
+            <!-- Body curve -->
+            <path d="M -80 0 Q -60 -40 0 -45 Q 60 -40 80 0 Q 60 30 0 35 Q -60 30 -80 0 Z" 
+                  fill="url(#croissant)"/>
+            
+            <!-- Layers/folds -->
+            <g stroke="#6b3f1f" stroke-width="1.5" fill="none" opacity="0.6">
+              <path d="M -60 -25 Q -50 -20 -40 -25"/>
+              <path d="M -30 -35 Q -20 -30 -10 -35"/>
+              <path d="M 10 -38 Q 25 -32 35 -38"/>
+              <path d="M 45 -25 Q 60 -20 65 -25"/>
+              <path d="M -55 5 Q -40 10 -25 5"/>
+              <path d="M -10 15 Q 10 20 25 15"/>
+              <path d="M 40 5 Q 55 10 65 5"/>
+            </g>
+
+            <!-- Highlight -->
+            <ellipse cx="0" cy="-25" rx="50" ry="10" fill="url(#croissantShine)"/>
+
+            <!-- Gold dust flakes -->
+            <g>
+              <circle cx="-30" cy="-20" r="3" fill="#ffe080" filter="url(#softGlow)"/>
+              <circle cx="10" cy="-30" r="2.5" fill="#ffd966" filter="url(#softGlow)"/>
+              <circle cx="40" cy="-15" r="3.5" fill="#ffe080" filter="url(#softGlow)"/>
+              <circle cx="-50" cy="0" r="2" fill="#ffd966" filter="url(#softGlow)"/>
+              <circle cx="25" cy="5" r="2.5" fill="#ffe080" filter="url(#softGlow)"/>
+              <circle cx="-15" cy="10" r="2" fill="#ffd966" filter="url(#softGlow)"/>
+              <circle cx="55" cy="-5" r="2" fill="#ffe080" filter="url(#softGlow)"/>
+            </g>
+          </g>
+
+          <!-- CROISSANT 2 (smaller, background) -->
+          <g transform="translate(480, 380) rotate(20) scale(0.7)" opacity="0.9">
+            <path d="M -80 0 Q -60 -40 0 -45 Q 60 -40 80 0 Q 60 30 0 35 Q -60 30 -80 0 Z" 
+                  fill="url(#croissant)"/>
+            <g stroke="#6b3f1f" stroke-width="1.5" fill="none" opacity="0.6">
+              <path d="M -50 -20 Q -35 -15 -20 -20"/>
+              <path d="M 0 -32 Q 20 -28 35 -32"/>
+              <path d="M -30 10 Q -10 15 10 10"/>
+              <path d="M 30 0 Q 50 5 60 0"/>
+            </g>
+            <ellipse cx="0" cy="-25" rx="50" ry="10" fill="url(#croissantShine)"/>
+            <circle cx="0" cy="-25" r="3" fill="#ffe080" filter="url(#softGlow)"/>
+            <circle cx="30" cy="-10" r="2.5" fill="#ffd966" filter="url(#softGlow)"/>
+            <circle cx="-30" cy="-15" r="2" fill="#ffe080" filter="url(#softGlow)"/>
+          </g>
+
+          <!-- Scattered gold flakes -->
+          <g filter="url(#softGlow)">
+            <circle cx="320" cy="380" r="2" fill="#ffe080"/>
+            <circle cx="370" cy="400" r="1.5" fill="#ffd966"/>
+            <circle cx="280" cy="395" r="1.5" fill="#ffe080"/>
+            <circle cx="500" cy="430" r="2" fill="#ffd966"/>
+            <circle cx="350" cy="430" r="1.5" fill="#ffe080"/>
+          </g>
+
+          <!-- Wheat stem decoration -->
+          <g transform="translate(80, 430) rotate(-30)" opacity="0.7">
+            <line x1="0" y1="0" x2="0" y2="-80" stroke="#a87038" stroke-width="2"/>
+            <ellipse cx="-5" cy="-30" rx="4" ry="10" fill="#c08a4a" transform="rotate(-30, -5, -30)"/>
+            <ellipse cx="5" cy="-40" rx="4" ry="10" fill="#c08a4a" transform="rotate(30, 5, -40)"/>
+            <ellipse cx="-5" cy="-50" rx="4" ry="10" fill="#c08a4a" transform="rotate(-30, -5, -50)"/>
+            <ellipse cx="5" cy="-60" rx="4" ry="10" fill="#c08a4a" transform="rotate(30, 5, -60)"/>
+            <ellipse cx="0" cy="-75" rx="4" ry="10" fill="#c08a4a"/>
+          </g>
+
+          <!-- Soft top glow -->
+          <ellipse cx="220" cy="200" rx="180" ry="60" fill="#f0c878" opacity="0.1" filter="url(#blur1)"/>
+        </svg>
+
+        <!-- Steam -->
+        <div class="steam" style="left: 30%; animation-delay: 0s;"></div>
+        <div class="steam" style="left: 35%; ani
